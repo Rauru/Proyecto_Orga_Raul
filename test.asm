@@ -88,15 +88,49 @@ loop:
 li $v0, 55
 syscall
 
-;li $v0, 21
-;syscall
-;li $t0, 119
-;beq $v0, $t0,
+li $v0, 21
+syscall
 
+isup:
+li $t0, 119
+bne $a0, $t0, isdown	;# if  != $t1 then target
+lw $a1, 4($sp)
+addi $a1, $a1, -1
+sw $a1, 4($sp)
+;#show $v0
+;#show $a0
 
+isdown:
+li $t0, 115
+bne $a0, $t0, isleft	;# if $t0 != $t1 then target
+lw $a1, 4($sp)
+addi $a1, $a1, 1
+sw $a1, 4($sp)
+#show $v0
+#show $a1
+
+isleft:
+li $t0, 97
+bne $a0, $t0, isright
 lw $a0, 0($sp)
 addi $a0, $a0, -1
 sw $a0, 0($sp)
+;#show $v0
+;#show $a0
+
+isright:
+li $t0, 100
+bne $a0, $t0, done
+lw $a0, 0($sp)
+addi $a0, $a0, 1
+sw $a0, 0($sp)
+;#show $v0
+;#show $a0
+
+done:
+;lw $a0, 0($sp)
+;addi $a0, $a0, -1
+;sw $a0, 0($sp)
 j begin
 
 j loop

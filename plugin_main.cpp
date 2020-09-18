@@ -26,17 +26,24 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
             rlutil::locate(a0,a1);
             rlutil::setChar(a2);
             std::cout.flush();
-            rlutil::msleep(40);
+           // rlutil::msleep(100);
             return ErrorCode::Ok;
         }
         case 21:{
           //  RLUTIL_INLINE int nb_getch(	void	)
-           // while(!kbhit()) {}
+            while(!kbhit()) {}
             //int getc=  rlutil::nb_getch();
            // int callgetkey = rlutil::getkey();
            //std::cout << "getkey: " << getc << '\n' << std::flush;
-            regs[Register::v0] =  rlutil::nb_getch();
-            //rlutil::msleep(5000);
+            regs[Register::a0] =  rlutil::nb_getch();
+            while(!kbhit()) {}
+            regs[Register::a1] =  rlutil::nb_getch();
+             while(!kbhit()) {}
+            regs[Register::a2] =  rlutil::nb_getch();
+            //std::cout << "getkey: " << regs[Register::v0] << '\n' << std::flush;
+            //std::cout << "getkeyv1: " << regs[Register::v1] << '\n' << std::flush;
+           // rlutil::msleep(5000);
+            
             return ErrorCode::Ok;
         }
         case 222:{

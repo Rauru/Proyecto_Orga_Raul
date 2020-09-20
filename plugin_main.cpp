@@ -5,7 +5,7 @@
 extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map)
 {
     unsigned v0 = regs[Register::v0];
-    rlutil::setColor(rlutil::RED);
+    //rlutil::setColor(rlutil::RED);
     switch (v0)
     {   
         case 0:{
@@ -31,37 +31,31 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
         }
         case 21:{
           //  RLUTIL_INLINE int nb_getch(	void	)
-            while(!kbhit()) {}
-            //int getc=  rlutil::nb_getch();
-           // int callgetkey = rlutil::getkey();
-           //std::cout << "getkey: " << getc << '\n' << std::flush;
-            regs[Register::a0] =  rlutil::nb_getch();
-            while(!kbhit()) {}
-            regs[Register::a1] =  rlutil::nb_getch();
-             while(!kbhit()) {}
-            regs[Register::a2] =  rlutil::nb_getch();
-            //std::cout << "getkey: " << regs[Register::v0] << '\n' << std::flush;
+           // while(!kbhit()) {}
+           
+            
+            //regs[Register::a0] =  rlutil::getkey();
+            //while(!kbhit()) {}
+            if(kbhit()){
+                regs[Register::a0] =  rlutil::nb_getch();
+            }else{
+                 regs[Register::a0] = 0;
+            }
+            
+            // while(!kbhit()) {}
+            //regs[Register::a2] =  rlutil::nb_getch();
+           
+            //std::cout << "getkey: " << regs[Register::a0] << '\n' << std::flush;
+            // rlutil::msleep(190);
             //std::cout << "getkeyv1: " << regs[Register::v1] << '\n' << std::flush;
            // rlutil::msleep(5000);
-            
+            std::cout.flush();
             return ErrorCode::Ok;
         }
-        case 222:{
+        case 22:{
             int a0 = regs[Register::a0];
-            int a1 = regs[Register::a1];
-            rlutil::cls();
-            rlutil::setBackgroundColor(3);
-            rlutil::locate(a0,a1);
-            rlutil::setChar(35);
-            rlutil::locate(a0+1,a1);
-
-
-            rlutil::setBackgroundColor(3);
-            rlutil::locate(1,1);
-            rlutil::setChar(35);
-            rlutil::locate(2,1);
-            return ErrorCode::Ok;
-
+            rlutil::setColor(a0);
+             return ErrorCode::Ok;
         }
         case 122:
         {

@@ -41,6 +41,12 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
             }else{
                  regs[Register::a0] = 0;
             }
+
+            if(kbhit()){
+                regs[Register::a1] =  rlutil::nb_getch();
+            }else{
+                 regs[Register::a1] = 0;
+            }
             
             // while(!kbhit()) {}
             //regs[Register::a2] =  rlutil::nb_getch();

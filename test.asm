@@ -1,4 +1,4 @@
-addi $sp, $sp, -72
+addi $sp, $sp, -112
 
 li $t0, 40     ;#posX ship
 sw $t0, 0($sp)
@@ -48,7 +48,7 @@ sw $t0, 52($sp)
 
 li $t0, 0    ;#ov3 updown switch
 sw $t0, 56($sp)
-
+;#--------------bullets-----------------
 li $t0, 200
 sw $t0, 60($sp)
 
@@ -57,6 +57,36 @@ sw $t0, 64($sp)
 
 li $t0, 1
 sw $t0, 68($sp)
+
+li $t0, 200
+sw $t0, 72($sp)
+
+li $t0, 100
+sw $t0, 76($sp)
+
+li $t0, 1
+sw $t0, 80($sp)
+
+li $t0, 200
+sw $t0, 84($sp)
+
+li $t0, 100
+sw $t0, 88($sp)
+
+li $t0, 1
+sw $t0, 92($sp)
+
+li $t0, 200
+sw $t0, 96($sp)
+
+li $t0, 100
+sw $t0, 100($sp)
+
+li $t0, 1
+sw $t0, 104($sp)
+
+li $t0, 1
+sw $t0, 108($sp) ;#which bullet
 
 
 
@@ -379,6 +409,10 @@ draw_bullets:
    li $v0, 20
    syscall
 
+
+
+
+
 move_bullets_right:
    li $t0, 130
    slt $t1, $a0, $t0
@@ -397,8 +431,153 @@ check_if_right:
 not_shoot_right:
 
 move_bullets_left:
-   bgtz
+   bgtz $a0, check_if_left
+   j not_shoot_left
 
+check_if_left:
+   lw $t0, 68($sp)
+   li $t1, 0
+   bne $t0, $t1, not_shoot_left
+
+   addi $a0, $a0, -1
+   sw $a0, 60($sp)
+
+not_shoot_left:
+
+;#-------------------------
+
+draw_bullet2:
+   
+   li $a3, 13
+   li $a2, 32
+   lw $a0, 72($sp)
+   lw $a1, 76($sp)
+
+   li $v0, 20
+   syscall
+
+
+move_bullet2_right:
+   li $t0, 130
+   slt $t1, $a0, $t0
+   li $t0, 1
+   beq $t0, $t1, check_if_right2
+   j not_shoot_right2
+
+check_if_right2:
+   lw $t0, 80($sp)
+   li $t1, 1
+   bne $t0, $t1, not_shoot_right2
+
+   addi $a0, $a0, 1
+   sw $a0, 72($sp)
+
+not_shoot_right2:
+
+move_bullet2_left:
+   bgtz $a0, check_if_left2
+   j not_shoot_left2
+
+check_if_left2:
+   lw $t0, 80($sp)
+   li $t1, 0
+   bne $t0, $t1, not_shoot_left2
+
+   addi $a0, $a0, -1
+   sw $a0, 72($sp)
+
+not_shoot_left2:
+;#---------------------------------------
+
+draw_bullet3:
+   
+   li $a3, 13
+   li $a2, 32
+   lw $a0, 84($sp)
+   lw $a1, 88($sp)
+
+   li $v0, 20
+   syscall
+
+
+move_bullet3_right:
+   li $t0, 130
+   slt $t1, $a0, $t0
+   li $t0, 1
+   beq $t0, $t1, check_if_right3
+   j not_shoot_right3
+
+check_if_right3:
+   lw $t0, 92($sp)
+   li $t1, 1
+   bne $t0, $t1, not_shoot_right3
+
+   addi $a0, $a0, 1
+   sw $a0, 84($sp)
+
+not_shoot_right3:
+
+move_bullet3_left:
+   bgtz $a0, check_if_left3
+   j not_shoot_left2
+
+check_if_left3:
+   lw $t0, 92($sp)
+   li $t1, 0
+   bne $t0, $t1, not_shoot_left3
+
+   addi $a0, $a0, -1
+   sw $a0, 84($sp)
+
+not_shoot_left3:
+
+;#------------------------
+
+draw_bullet4:
+   
+   li $a3, 13
+   li $a2, 32
+   lw $a0, 96($sp)
+   lw $a1, 100($sp)
+
+   li $v0, 20
+   syscall
+
+
+
+move_bullet4_right:
+   li $t0, 130
+   slt $t1, $a0, $t0
+   li $t0, 1
+   beq $t0, $t1, check_if_right4
+   j not_shoot_right4
+
+check_if_right4:
+   lw $t0, 104($sp)
+   li $t1, 1
+   bne $t0, $t1, not_shoot_right4
+
+   addi $a0, $a0, 1
+   sw $a0, 96($sp)
+
+not_shoot_right4:
+
+move_bullet4_left:
+   bgtz $a0, check_if_left4
+   j not_shoot_left2
+
+check_if_left4:
+   lw $t0, 104($sp)
+   li $t1, 0
+   bne $t0, $t1, not_shoot_left4
+
+   addi $a0, $a0, -1
+   sw $a0, 96($sp)
+
+not_shoot_left4:
+
+
+;#-------------------------
 draw_ship:
   lw $t0, 8($sp)
   li $t1, 0
@@ -474,7 +653,7 @@ loop:
 li $v0, 21
 syscall
 
-li $t0, 112000 ;110500
+li $t0, 101000 ;110500
 ;#show $t0
 li $t1, 0
 delta:
@@ -533,9 +712,24 @@ sw $t0, 12($sp)
 done:
 
 shooting:
+
+
+
    li $t0, 32
    bne $a0, $t0, dont_shoot
 
+   check_which_bullet:
+   lw $t0, 108($sp)
+   li $t1, 1
+   beq $t0, $t1, bullet1
+   li $t1, 2
+   beq $t0, $t1, bullet2
+   li $t1, 3
+   beq $t0, $t1, bullet3
+   li $t1, 4
+   beq $t0, $t1, bullet4
+
+bullet1:
    lw $t0, 0($sp)
    lw $t1, 4($sp)
    lw $t2, 8($sp)
@@ -543,7 +737,56 @@ shooting:
    sw $t1, 64($sp)
    sw $t2, 68($sp)
 
+   ;#load next bullet
+   lw $t0, 108($sp)
+   addi $t0, $t0, 1
+   sw $t0, 108($sp)
 
+   j done_checking_bullets
+
+bullet2:
+   lw $t0, 0($sp)
+   lw $t1, 4($sp)
+   lw $t2, 8($sp)
+   sw $t0, 72($sp)
+   sw $t1, 76($sp)
+   sw $t2, 80($sp)
+
+   ;#load next bullet
+   lw $t0, 108($sp)
+   addi $t0, $t0, 1
+   sw $t0, 108($sp)
+
+   j done_checking_bullets
+bullet3:
+   lw $t0, 0($sp)
+   lw $t1, 4($sp)
+   lw $t2, 8($sp)
+   sw $t0, 84($sp)
+   sw $t1, 88($sp)
+   sw $t2, 92($sp)
+
+   ;#load next bullet
+   lw $t0, 108($sp)
+   addi $t0, $t0, 1
+   sw $t0, 108($sp)
+
+   j done_checking_bullets
+bullet4:
+   lw $t0, 0($sp)
+   lw $t1, 4($sp)
+   lw $t2, 8($sp)
+   sw $t0, 96($sp)
+   sw $t1, 100($sp)
+   sw $t2, 104($sp)
+
+   ;#load next bullet
+   li $t0, 1
+   sw $t0, 108($sp)
+
+
+
+done_checking_bullets:
 dont_shoot:
 
 

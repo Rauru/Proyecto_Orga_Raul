@@ -833,10 +833,20 @@ lw $t1, 4($sp)  ;#posY ship
 lw $t2, 16($sp) ;#posX ovni1
 lw $t3, 20($sp) ;#posy ovni1
 
-bne $t0, $t2, ovni1_done
-bne $t1, $t3, ovni1_done
+li $t4, -1
+add $t4, $t4, $t3
+li $t5, 1
+add $t5, $t5, $t3
 
-j game_over
+beq $t0, $t2, check_y
+j ovni1_done
+
+check_y:
+
+beq $t1, $t3, game_over
+beq $t1, $t4, game_over
+beq $t1, $t5, game_over
+
 
 
 ovni1_done:
@@ -846,10 +856,19 @@ ovn2_collision:
    lw $t2, 24($sp) ;#posX ovni2
    lw $t3, 28($sp) ;#posy ovni2
 
-   bne $t0, $t2, ovni2_done
-   bne $t1, $t3, ovni2_done
+   li $t4, -1
+   add $t4, $t4, $t3
+   li $t5, 1
+   add $t5, $t5, $t3
 
-   j game_over
+   beq $t0, $t2, check_y2
+   j ovni2_done
+
+   check_y2:
+
+   beq $t1, $t3, game_over
+   beq $t1, $t4, game_over
+   beq $t1, $t5, game_over
 
 ovni2_done:
 
@@ -858,10 +877,20 @@ ovn3_collision:
    lw $t2, 36($sp) ;#posX ovni2
    lw $t3, 40($sp) ;#posy ovni2
 
-   bne $t0, $t2, ovni3_done
-   bne $t1, $t3, ovni3_done
+   
+   li $t4, -1
+   add $t4, $t4, $t3
+   li $t5, 1
+   add $t5, $t5, $t3
 
-   j game_over
+   beq $t0, $t2, check_y3
+   j ovni3_done
+
+   check_y3:
+
+   beq $t1, $t3, game_over
+   beq $t1, $t4, game_over
+   beq $t1, $t5, game_over
 
 ovni3_done:
 

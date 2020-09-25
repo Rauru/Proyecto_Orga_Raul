@@ -653,7 +653,7 @@ loop:
 li $v0, 21
 syscall
 
-li $t0, 101000 ;110500
+li $t0, 112000 ;110500
 ;#show $t0
 li $t1, 0
 delta:

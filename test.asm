@@ -361,6 +361,15 @@ move_ovni4:
    addi $a0, $a0, 2
    sw $a0, 48($sp)
 
+   li $t0, 241
+   beq $t0, $a0, reset_ov4_left
+
+   j move_ov4_vertical
+
+reset_ov4_left:
+   li $a0, -50
+   sw $a0, 48($sp)
+
 move_ov4_vertical:
    li $t0, 0
    lw $t1, 56($sp) 

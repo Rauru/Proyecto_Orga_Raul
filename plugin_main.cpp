@@ -63,6 +63,26 @@ extern "C" ErrorCode handleSyscall(uint32_t *regs, void *mem, MemoryMap *mem_map
             rlutil::setColor(a0);
              return ErrorCode::Ok;
         }
+        case 23:{
+          //  RLUTIL_INLINE int nb_getch(	void	)
+
+          std::cout << "DEFENDER " << '\n' << std::flush;
+          std::cout << "Press any key " << '\n' << std::flush;
+            while(!kbhit()) {}
+           
+            
+            regs[Register::a0] =  rlutil::getkey();
+            
+            // while(!kbhit()) {}
+            //regs[Register::a2] =  rlutil::nb_getch();
+           
+            
+            // rlutil::msleep(190);
+            //std::cout << "getkeyv1: " << regs[Register::v1] << '\n' << std::flush;
+           // rlutil::msleep(5000);
+            std::cout.flush();
+            return ErrorCode::Ok;
+        }
         case 122:
         {
             int a0 = regs[Register::a0];

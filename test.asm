@@ -1,3 +1,8 @@
+
+splash:
+li $v0, 23
+syscall
+
 addi $sp, $sp, -152
 
 li $t0, 40     ;#posX ship
@@ -1658,6 +1663,11 @@ j loop
 
 
 game_over:
+
+
+li $v0, 0
+syscall
+j splash
 
 li $v0, 0
 syscall

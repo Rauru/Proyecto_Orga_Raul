@@ -301,13 +301,30 @@ draw_ovni:
    li $a0, 4
    li $v0, 22
    syscall
+
    li $a3, 4
    li $a2, 32
    lw $a0, 16($sp)
    lw $a1, 20($sp)
-   
    li $v0, 20
    syscall
+
+   addi $a0, $a0, 1
+   li $a3, 0
+   li $a2, 62
+   li $v0, 20
+   syscall
+
+   addi $a0, $a0, -2
+   li $a3, 0
+   li $a2, 60
+   li $v0, 20
+   syscall
+
+   addi $a0, $a0,1 
+
+
+
    ;#move ovni after drawing it
 move_ovni:
    lw $t0, 8($sp)
@@ -754,14 +771,41 @@ facing_right:
    li $a2, 35
    lw $a0, 0($sp)
    lw $a1, 4($sp)
-   
    li $v0, 20
    syscall
+
+   addi $a1, $a1, 1
+   li $a2, 124
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, -2
+   li $a2, 124
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, 1
    
    li $a2, 35
    addi $a0, $a0, 1
    li $v0, 20
    syscall
+
+   ;#---upper wing
+    addi $a1, $a1, 1
+   li $a2, 47
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, -2
+   li $a2, 92
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, 1
+
+   ;#---lower wing
+
    
    li $a2, 62
    addi $a0, $a0, 1
@@ -781,17 +825,47 @@ facing_left:
    
    li $v0, 20
    syscall
+
    
    li $a2, 35
    addi $a0, $a0, 1
    li $v0, 20
    syscall
+
+   ;#---upper wing
+    addi $a1, $a1, 1
+   li $a2, 92
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, -2
+   li $a2, 47
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, 1
+
+   ;#---lower wing
    
    li $a2, 35
    addi $a0, $a0, 1
    lw $a1, 4($sp)
    li $v0, 20
    syscall
+
+   ;#----wings
+   addi $a1, $a1, 1
+   li $a2, 124
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, -2
+   li $a2, 124
+   li $v0, 20
+   syscall
+
+   addi $a1, $a1, 1
+;#----wings
 
 
 ;li $a3, 0

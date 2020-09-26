@@ -1,4 +1,4 @@
-addi $sp, $sp, -116
+addi $sp, $sp, -152
 
 li $t0, 40     ;#posX ship
 sw $t0, 0($sp)
@@ -87,11 +87,40 @@ sw $t0, 104($sp)
 
 li $t0, 1
 sw $t0, 108($sp) ;#which bullet
-;#------------------------
+;#---------------SCORES---------
 
 li $t0, 0
 sw $t0, 112($sp)
 
+li $t0, 0
+sw $t0, 116($sp)
+
+li $t0, 0
+sw $t0, 120($sp)
+
+li $t0, 0
+sw $t0, 124($sp)
+
+;#=================STARS===============
+
+li $t0, 100
+sw $t0, 128($sp) ;#STAR 1 X
+
+li $t0, 8
+sw $t0, 132($sp) ;#STAR 1 Y
+
+li $t0, 10
+sw $t0, 136($sp) ;#STAR 2 X
+
+li $t0, 10
+sw $t0, 140($sp) ;#STAR 2 Y
+
+li $t0, 70
+sw $t0, 144($sp) ;#STAR 3 X
+
+li $t0, 25
+sw $t0, 148($sp) ;#STAR 3 Y
+;#=====================================================
 
 li $v0, 1
 syscall
@@ -146,6 +175,127 @@ li $t4, 0
    li $v0, 20
  ;  syscall
 
+draw_background:
+   li $a0, 15
+   li $v0, 22
+   syscall
+
+draw_star1:
+   
+   li $a3, 0
+   li $a2, 43
+   lw $a0, 128($sp)
+   lw $a1, 132($sp)
+   
+   li $v0, 20
+   syscall
+
+move_star1:
+   lw $t0, 8($sp)
+   li $t1, 0
+   beq $t0, $t1, move_star_right
+   addi $a0, $a0, -1
+   sw $a0, 128($sp)
+
+   li $t1, 0
+   beq $t1, $a0, reset_start_to_right
+
+   j move_star1_done
+reset_start_to_right:
+   li $t1, 120
+   sw $t1, 128($sp)
+   j move_star1_done
+move_star_right:
+   addi $a0, $a0, 1
+   sw $a0, 128($sp)
+
+   li $t1, 120
+   beq $t1, $a0, reset_start_to_left
+    j move_star1_done
+reset_start_to_left:
+   li $t1, 0
+   sw $t1, 128($sp)
+
+move_star1_done:
+
+
+
+draw_star2:
+   
+   li $a3, 0
+   li $a2, 43
+   lw $a0, 136($sp)
+   lw $a1, 140($sp)
+   
+   li $v0, 20
+   syscall
+
+move_star2:
+   lw $t0, 8($sp)
+   li $t1, 0
+   beq $t0, $t1, move_star_right2
+   addi $a0, $a0, -1
+   sw $a0, 136($sp)
+
+   li $t1, 0
+   beq $t1, $a0, reset_start_to_right2
+
+   j move_star1_done2
+reset_start_to_right2:
+   li $t1, 120
+   sw $t1, 136($sp)
+   j move_star1_done2
+move_star_right2:
+   addi $a0, $a0, 1
+   sw $a0, 136($sp)
+
+   li $t1, 120
+   beq $t1, $a0, reset_start_to_left2
+    j move_star1_done2
+reset_start_to_left2:
+   li $t1, 0
+   sw $t1, 136($sp)
+
+move_star1_done2:
+
+
+draw_star3:
+   
+   li $a3, 0
+   li $a2, 43
+   lw $a0, 144($sp)
+   lw $a1, 148($sp)
+   
+   li $v0, 20
+   syscall
+
+move_star3:
+   lw $t0, 8($sp)
+   li $t1, 0
+   beq $t0, $t1, move_star_right3
+   addi $a0, $a0, -1
+   sw $a0, 144($sp)
+
+   li $t1, 0
+   beq $t1, $a0, reset_start_to_right3
+
+   j move_star1_done3
+reset_start_to_right3:
+   li $t1, 120
+   sw $t1, 144($sp)
+   j move_star1_done3
+move_star_right3:
+   addi $a0, $a0, 1
+   sw $a0, 144($sp)
+
+   li $t1, 120
+   beq $t1, $a0, reset_start_to_left3
+    j move_star1_done3
+reset_start_to_left3:
+   li $t1, 0
+   sw $t1, 144($sp)
+
+move_star1_done3:
 
 draw_ovni:
    li $a0, 4
